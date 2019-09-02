@@ -7,7 +7,10 @@ package gym.spartan;
 import java.io.*;
 import java.net.*;
 import java.util.Vector;
-
+/**
+ *
+ * @author pedro
+ */
 public class Conexion extends Thread {
     
     Socket cliente1 = null;
@@ -52,7 +55,6 @@ public class Conexion extends Thread {
                
         }catch(Exception e){};
      }
-    
     public void EnviarMensaje(String mensaje){
      
             try{

@@ -9,24 +9,37 @@ import java.io.*;
 import java.net.*;
 
 
-
-public class Cliente {
+/**
+ *
+ * @author pedro
+ */
+public class Cliente3 {
     
    Socket cliente;
    DataOutputStream buffSalida;
    DataInputStream buffEntrada;
    DataInputStream teclado;
    String nombre;
+   VentanaChat vChat;
    
-   public Cliente(Socket cliente, DataOutputStream buffSalida, DataInputStream buffEntrada, DataInputStream teclado, String nombre){
+   public Cliente3(Socket cliente, DataOutputStream buffSalida, DataInputStream buffEntrada, DataInputStream teclado, String nombre){
    this.cliente = cliente;
    this.buffSalida = buffSalida;
    this.buffEntrada = buffEntrada;
    this.teclado = teclado;
-  this.nombre = nombre;
+   this.nombre = nombre;
        
    }
    
+   public Cliente3(){
+       
+   }
+   
+   public void setVentanaChat(VentanaChat vChat)
+   {
+       this.vChat = vChat;
+       
+   }
     public void RecibirDatos() {
         
         Thread hilo = new Thread(new Runnable() {
@@ -37,6 +50,7 @@ public class Cliente {
                     while(true){
                         
                         String mesgIn = buffEntrada.readUTF();
+                        vChat.setTextField(mesgIn);
                         System.out.println(nombre+": "+mesgIn);
                     }
                     
@@ -50,40 +64,34 @@ public class Cliente {
         hilo.start();
 }
    
-    public void EscribirDatos() {
-       
-           
+    public void EnviarDatos(String msg) {
+              
      try{
-                    
-             String line = "";
-            while (!line.equals(".bye"))
-            {
-                
-                line = teclado.readLine();
-                buffSalida.writeUTF("Karen Ornelas: "+line);
-                buffSalida.flush();
-               
-                         
-            }      
-     } catch(Exception e){};   
-                    
-                    
+             vChat.setTextField("P. Gonzale3: "+msg);
+             buffSalida.writeUTF("P. Gonzale3: "+msg);
+             buffSalida.flush();
+     }       catch(Exception e){};   
+                                
     }
     
     
     
-    public static void main(String[] args){
+    public void CorrerCliente(){
         
     Socket cliente;
-    int puerto = 9000;
-    String ip = "10.10.180.134";
+    int puerto = 9001;
+    String ip = "127.0.0.1";
     DataOutputStream buffSalida;
     DataInputStream buffEntrada,teclado;
+    
+    VentanaChat vChat = new VentanaChat();
+    vChat.setVisible(true);
     
     
     String tec = "h";
     String msg;
     
+       
         try{
             
                   
@@ -94,9 +102,13 @@ public class Cliente {
             
             String nombre = ">>>";
             
-            Cliente cliente1 = new Cliente(cliente,buffSalida,buffEntrada,teclado,nombre);
+            Cliente3 cliente1 = new Cliente3(cliente,buffSalida,buffEntrada,teclado,nombre);
+            vChat.setCliente(cliente1);
+            cliente1.setVentanaChat(vChat);
             cliente1.RecibirDatos();
-            cliente1.EscribirDatos();
+            //cliente1.EnviarDatos()
+        
+            
             
           
             

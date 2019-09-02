@@ -160,6 +160,7 @@ public class panel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "YOU MUST FILL ALL THE FIELDS", "ERROR!",JOptionPane.ERROR_MESSAGE, Icon);          
         } else if (contraseña.equals(confContraseña)) {
             Archivos.guardarArchivosTxT(nombre, email, contraseña);
+            
         } else {
             ImageIcon Icon = new ImageIcon(panel.class.getResource("coinciden.gif"));
             JOptionPane.showMessageDialog(null, "PASSWORDS DO NOT MATCH", "ERROR!", JOptionPane.ERROR_MESSAGE, Icon);
@@ -184,9 +185,9 @@ public class panel extends javax.swing.JFrame {
         boolean verificar = a.leerCorreoYContraseña(contraseña, correo);
         if (verificar == true) {
             ImageIcon icon = new ImageIcon(panel.class.getResource("bienvenido.gif"));
-            JOptionPane.showMessageDialog(null, "🏋 W E L C O M E   T O   G Y M   S P A R T A N ! 🏋", "WELCOME! ",JOptionPane.ERROR_MESSAGE,icon);
-            opciones op = new opciones();
-            op.setVisible(true);
+            JOptionPane.showMessageDialog(null, "🏋 W E L C O M E! 🏋", "WELCOME! ",JOptionPane.ERROR_MESSAGE,icon);
+            Cliente3 cliente = new Cliente3();
+            cliente.CorrerCliente();
             close();
         } else {
             ImageIcon icon = new ImageIcon(panel.class.getResource("mal.gif"));
